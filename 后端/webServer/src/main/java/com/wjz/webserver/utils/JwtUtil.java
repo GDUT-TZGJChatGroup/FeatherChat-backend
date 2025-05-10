@@ -57,4 +57,9 @@ public class JwtUtil {
         return claims;
     }
 
+    public static String getUserAccountFromToken(String secretKey, String token) {
+        Claims claims = parseJWT(secretKey, token);
+        return (String) claims.get("userAccount");
+    }
+
 }
