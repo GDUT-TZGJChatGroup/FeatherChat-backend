@@ -68,7 +68,7 @@ public class UserController {
         return userService.friendAgree(accName);
     }
 
-    @DeleteMapping("friendDelete/{accName}")
+    @DeleteMapping("/friendDelete/{accName}")
     public Result friendDelete(@PathVariable String accName){
         log.info("删除好友");
         return userService.friendDelete(accName);

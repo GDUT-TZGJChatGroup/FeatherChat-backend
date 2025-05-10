@@ -28,7 +28,7 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
                 .addPathPatterns("/**")
                 .excludePathPatterns("/user/login")
                 .excludePathPatterns("/user/register")
-                .excludePathPatterns("/email");
+                .excludePathPatterns("/mail");
     }
     @Override
     protected void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
