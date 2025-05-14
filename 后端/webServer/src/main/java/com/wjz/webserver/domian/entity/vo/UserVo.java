@@ -7,6 +7,7 @@ import lombok.Data;
 public class UserVo {
     private Long id;
     // 昵称
+    private String account;
     private String username;
     private String avatarurl;
 

@@ -99,6 +99,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         String token = JwtUtil.createJWT(jwtConfig.getSecretKey(), jwtConfig.getTtl(), claims);
 
         UserVo userVo = new UserVo();
+        userVo.setAccount(user.getUserAccount());
         userVo.setUsername(flag.getUsername());
         userVo.setId(flag.getId());
         userVo.setToken(token);
@@ -176,6 +177,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             vo.setId(f.getId());
             vo.setUsername(f.getUsername());
             vo.setAvatarurl(f.getAvatarurl());
+            vo.setAccount(f.getUseraccount());
             return vo;
         }).collect(Collectors.toList());
 
@@ -217,6 +219,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             vo.setId(u.getId());
             vo.setUsername(u.getUsername());
             vo.setAvatarurl(u.getAvatarurl());
+            vo.setAccount(u.getUseraccount());
             return vo;
         }).collect(Collectors.toList());
 
@@ -230,7 +233,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
         // 3. 查询发起方用户
         User fromUser = userMapper.selectOne(new QueryWrapper<User>().eq("useraccount", accName));
-
+        if (fromUser == null) {
+            // 用户不存在
+            return Result.error("用户不存在");
+        }
 
         // 4. 查找好友请求记录
         QueryWrapper<Friendship> queryWrapper = new QueryWrapper<>();
@@ -258,6 +264,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         String currentAcc = BaseContext.getCurrentAcc();
         User userA = userMapper.selectOne(new QueryWrapper<User>().eq("useraccount", currentAcc));
         User userB = userMapper.selectOne(new QueryWrapper<User>().eq("useraccount", accName));
+        if (userB == null) {
+            // 用户不存在
+            return Result.error("用户不存在");
+        }
+
         Long userAId = userA.getId();
         Long userBId = userB.getId();
 

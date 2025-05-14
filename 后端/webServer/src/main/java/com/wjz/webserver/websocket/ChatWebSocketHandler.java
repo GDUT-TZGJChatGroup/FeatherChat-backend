@@ -2,6 +2,7 @@ package com.wjz.webserver.websocket;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.wjz.webserver.config.JacksonObjectMapper;
 import com.wjz.webserver.config.JwtConfig;
 import com.wjz.webserver.context.BaseContext;
 import com.wjz.webserver.domian.entity.ChatMessage;
@@ -35,7 +36,7 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
     @Autowired
     private JwtConfig jwtConfig;
 
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private ObjectMapper objectMapper = new JacksonObjectMapper();
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
